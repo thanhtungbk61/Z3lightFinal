@@ -18,30 +18,36 @@
 // Creator for attribute: start up current level, endpoint: 1
 #define CREATOR_START_UP_CURRENT_LEVEL_1 0xB003
 #define NVM3KEY_START_UP_CURRENT_LEVEL_1 ( NVM3KEY_DOMAIN_ZIGBEE | 0xB003 )
+// Creator for attribute: ReportTimec Attribute: 0x0001 0x10A2, endpoint: 1
+#define CREATOR_ReportTime_1 0xB004
+#define NVM3KEY_ReportTime_1 ( NVM3KEY_DOMAIN_ZIGBEE | 0xB004 )
 // Creator for attribute: Dimming Attribute: 0x0001 0x10A2, endpoint: 1
-#define CREATOR_Dimming_1 0xB004
-#define NVM3KEY_Dimming_1 ( NVM3KEY_DOMAIN_ZIGBEE | 0xB004 )
+#define CREATOR_Dimming_1 0xB005
+#define NVM3KEY_Dimming_1 ( NVM3KEY_DOMAIN_ZIGBEE | 0xB005 )
+// Creator for attribute: TimeReport Attribute: 0x0001 0x10A2, endpoint: 1
+#define CREATOR_timeReport_1 0xB006
+#define NVM3KEY_timeReport_1 ( NVM3KEY_DOMAIN_ZIGBEE | 0xB006 )
 // Creator for attribute: cluster revision, endpoint: 1
-#define CREATOR_MANAGER_CLUSTER_REVISION_SERVER_1 0xB005
-#define NVM3KEY_MANAGER_CLUSTER_REVISION_SERVER_1 ( NVM3KEY_DOMAIN_ZIGBEE | 0xB005 )
+#define CREATOR_MANAGER_CLUSTER_REVISION_SERVER_1 0xB007
+#define NVM3KEY_MANAGER_CLUSTER_REVISION_SERVER_1 ( NVM3KEY_DOMAIN_ZIGBEE | 0xB007 )
 // Creator for attribute: on/off, endpoint: 2
-#define CREATOR_ON_OFF_2 0xB006
-#define NVM3KEY_ON_OFF_2 ( NVM3KEY_DOMAIN_ZIGBEE | 0xB006 )
+#define CREATOR_ON_OFF_2 0xB008
+#define NVM3KEY_ON_OFF_2 ( NVM3KEY_DOMAIN_ZIGBEE | 0xB008 )
 // Creator for attribute: start up on off, endpoint: 2
-#define CREATOR_START_UP_ON_OFF_2 0xB007
-#define NVM3KEY_START_UP_ON_OFF_2 ( NVM3KEY_DOMAIN_ZIGBEE | 0xB007 )
+#define CREATOR_START_UP_ON_OFF_2 0xB009
+#define NVM3KEY_START_UP_ON_OFF_2 ( NVM3KEY_DOMAIN_ZIGBEE | 0xB009 )
 // Creator for attribute: current level, endpoint: 2
-#define CREATOR_CURRENT_LEVEL_2 0xB008
-#define NVM3KEY_CURRENT_LEVEL_2 ( NVM3KEY_DOMAIN_ZIGBEE | 0xB008 )
+#define CREATOR_CURRENT_LEVEL_2 0xB00A
+#define NVM3KEY_CURRENT_LEVEL_2 ( NVM3KEY_DOMAIN_ZIGBEE | 0xB00A )
 // Creator for attribute: start up current level, endpoint: 2
-#define CREATOR_START_UP_CURRENT_LEVEL_2 0xB009
-#define NVM3KEY_START_UP_CURRENT_LEVEL_2 ( NVM3KEY_DOMAIN_ZIGBEE | 0xB009 )
+#define CREATOR_START_UP_CURRENT_LEVEL_2 0xB00B
+#define NVM3KEY_START_UP_CURRENT_LEVEL_2 ( NVM3KEY_DOMAIN_ZIGBEE | 0xB00B )
 // Creator for attribute: color temperature, endpoint: 2
-#define CREATOR_COLOR_CONTROL_COLOR_TEMPERATURE_2 0xB00A
-#define NVM3KEY_COLOR_CONTROL_COLOR_TEMPERATURE_2 ( NVM3KEY_DOMAIN_ZIGBEE | 0xB00A )
+#define CREATOR_COLOR_CONTROL_COLOR_TEMPERATURE_2 0xB00C
+#define NVM3KEY_COLOR_CONTROL_COLOR_TEMPERATURE_2 ( NVM3KEY_DOMAIN_ZIGBEE | 0xB00C )
 // Creator for attribute: start up color temperature mireds, endpoint: 2
-#define CREATOR_START_UP_COLOR_TEMPERATURE_MIREDS_2 0xB00B
-#define NVM3KEY_START_UP_COLOR_TEMPERATURE_MIREDS_2 ( NVM3KEY_DOMAIN_ZIGBEE | 0xB00B )
+#define CREATOR_START_UP_COLOR_TEMPERATURE_MIREDS_2 0xB00D
+#define NVM3KEY_START_UP_COLOR_TEMPERATURE_MIREDS_2 ( NVM3KEY_DOMAIN_ZIGBEE | 0xB00D )
 
 
 // Types for the tokens
@@ -54,6 +60,8 @@ typedef uint16_t  tokType_color_control_color_temperature;
 typedef uint16_t  tokType_start_up_color_temperature_mireds;
 typedef uint16_t  tokType_dimming;
 typedef uint16_t  tokType_manager_cluster_revision_server;
+typedef uint8_t  tokType_timereport;
+typedef uint16_t  tokType_reporttime;
 #endif // DEFINETYPES
 
 
@@ -63,7 +71,9 @@ DEFINE_BASIC_TOKEN(ON_OFF_1, tokType_on_off, 0x00)
 DEFINE_BASIC_TOKEN(START_UP_ON_OFF_1, tokType_start_up_on_off, 0xFF)
 DEFINE_BASIC_TOKEN(CURRENT_LEVEL_1, tokType_current_level, 0x00)
 DEFINE_BASIC_TOKEN(START_UP_CURRENT_LEVEL_1, tokType_start_up_current_level, 0x33)
+DEFINE_BASIC_TOKEN(ReportTime_1, tokType_reporttime, 0x0000UL)
 DEFINE_BASIC_TOKEN(Dimming_1, tokType_dimming, 0x0000UL)
+DEFINE_BASIC_TOKEN(timeReport_1, tokType_timereport, 0x00UL)
 DEFINE_BASIC_TOKEN(MANAGER_CLUSTER_REVISION_SERVER_1, tokType_manager_cluster_revision_server, 0x0001)
 DEFINE_BASIC_TOKEN(ON_OFF_2, tokType_on_off, 0x00)
 DEFINE_BASIC_TOKEN(START_UP_ON_OFF_2, tokType_start_up_on_off, 0xFF)
@@ -89,8 +99,12 @@ DEFINE_BASIC_TOKEN(START_UP_COLOR_TEMPERATURE_MIREDS_2, tokType_start_up_color_t
     emberAfWriteServerAttribute(1, ZCL_LEVEL_CONTROL_CLUSTER_ID, ZCL_CURRENT_LEVEL_ATTRIBUTE_ID, (uint8_t*)ptr, ZCL_INT8U_ATTRIBUTE_TYPE); \
     halCommonGetToken((tokType_start_up_current_level *)ptr, TOKEN_START_UP_CURRENT_LEVEL_1); \
     emberAfWriteServerAttribute(1, ZCL_LEVEL_CONTROL_CLUSTER_ID, ZCL_START_UP_CURRENT_LEVEL_ATTRIBUTE_ID, (uint8_t*)ptr, ZCL_INT8U_ATTRIBUTE_TYPE); \
+    halCommonGetToken((tokType_reporttime *)ptr, TOKEN_ReportTime_1); \
+    emberAfWriteManufacturerSpecificServerAttribute(1, ZCL_MANAGER_ID, ZCL_ReportTime_ATTRIBUTE_ID, 0x10A2, (uint8_t*)ptr, ZCL_INT16U_ATTRIBUTE_TYPE); \
     halCommonGetToken((tokType_dimming *)ptr, TOKEN_Dimming_1); \
     emberAfWriteManufacturerSpecificServerAttribute(1, ZCL_MANAGER_ID, ZCL_Dimming_ATTRIBUTE_ID, 0x10A2, (uint8_t*)ptr, ZCL_INT16U_ATTRIBUTE_TYPE); \
+    halCommonGetToken((tokType_timereport *)ptr, TOKEN_timeReport_1); \
+    emberAfWriteManufacturerSpecificServerAttribute(1, ZCL_MANAGER_ID, ZCL_timeReport_ATTRIBUTE_ID, 0x10A2, (uint8_t*)ptr, ZCL_INT8U_ATTRIBUTE_TYPE); \
     halCommonGetToken((tokType_manager_cluster_revision_server *)ptr, TOKEN_MANAGER_CLUSTER_REVISION_SERVER_1); \
     emberAfWriteManufacturerSpecificServerAttribute(1, ZCL_MANAGER_ID, ZCL_MANAGER_CLUSTER_REVISION_SERVER_ATTRIBUTE_ID, 0x10A2, (uint8_t*)ptr, ZCL_INT16U_ATTRIBUTE_TYPE); \
   } \
@@ -129,8 +143,12 @@ DEFINE_BASIC_TOKEN(START_UP_COLOR_TEMPERATURE_MIREDS_2, tokType_start_up_color_t
       if ( metadata->attributeId == 0x4000 && 0x0000 == emberAfGetMfgCode(metadata) &&!emberAfAttributeIsClient(metadata) ) \
         halCommonSetToken(TOKEN_START_UP_CURRENT_LEVEL_1, data); \
     } else if ( clusterId == 0xFC10 ) { \
+      if ( metadata->attributeId == 0x0013 && 0x10A2 == emberAfGetMfgCode(metadata) &&!emberAfAttributeIsClient(metadata) ) \
+        halCommonSetToken(TOKEN_ReportTime_1, data); \
       if ( metadata->attributeId == 0x0017 && 0x10A2 == emberAfGetMfgCode(metadata) &&!emberAfAttributeIsClient(metadata) ) \
         halCommonSetToken(TOKEN_Dimming_1, data); \
+      if ( metadata->attributeId == 0x0018 && 0x10A2 == emberAfGetMfgCode(metadata) &&!emberAfAttributeIsClient(metadata) ) \
+        halCommonSetToken(TOKEN_timeReport_1, data); \
       if ( metadata->attributeId == 0xFFFD && 0x10A2 == emberAfGetMfgCode(metadata) &&!emberAfAttributeIsClient(metadata) ) \
         halCommonSetToken(TOKEN_MANAGER_CLUSTER_REVISION_SERVER_1, data); \
     } \

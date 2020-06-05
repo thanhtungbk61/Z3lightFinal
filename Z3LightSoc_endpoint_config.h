@@ -122,16 +122,21 @@
     { 0x400D, ZCL_INT16U_ATTRIBUTE_TYPE, 2, (0x00), { (uint8_t*)0x0000UL } }, /* 82 / Color Control / couple color temp to level min-mireds*/\
     { 0x4010, ZCL_INT16U_ATTRIBUTE_TYPE, 2, (ATTRIBUTE_MASK_TOKENIZE), { (uint8_t*)0x4444 } }, /* 83 / Color Control / start up color temperature mireds*/\
     { 0xFFFD, ZCL_INT16U_ATTRIBUTE_TYPE, 2, (0x00), { (uint8_t*)0x0001 } }, /* 84 / Color Control / cluster revision*/\
-    { 0xFFFD, ZCL_INT16U_ATTRIBUTE_TYPE, 2, (0x00), { (uint8_t*)0x0001 } }, /* 85 / ZLL Commissioning / cluster revision*/\
-    { 0x0010, ZCL_CHAR_STRING_ATTRIBUTE_TYPE, 113, (ATTRIBUTE_MASK_WRITABLE|ATTRIBUTE_MASK_MANUFACTURER_SPECIFIC), { (uint8_t*)&(generatedDefaults[34]) } }, /* 86 / Manager / OnOffSchedule Attribute: 0x0000 0x10A2*/\
-    { 0x0011, ZCL_CHAR_STRING_ATTRIBUTE_TYPE, 129, (ATTRIBUTE_MASK_WRITABLE|ATTRIBUTE_MASK_MANUFACTURER_SPECIFIC), { NULL } }, /* 87 / Manager / DimmingSchedule Attribute: 0x0000 0x10A2*/\
-    { 0x0012, ZCL_CHAR_STRING_ATTRIBUTE_TYPE, 101, (ATTRIBUTE_MASK_WRITABLE|ATTRIBUTE_MASK_MANUFACTURER_SPECIFIC), { NULL } }, /* 88 / Manager / Group Attribute: 0x0001 0x10A2*/\
-    { 0x0013, ZCL_INT16U_ATTRIBUTE_TYPE, 2, (ATTRIBUTE_MASK_MANUFACTURER_SPECIFIC), { (uint8_t*)0x0000UL } }, /* 89 / Manager / ReportTimec Attribute: 0x0001 0x10A2*/\
-    { 0x0014, ZCL_CHAR_STRING_ATTRIBUTE_TYPE, 101, (ATTRIBUTE_MASK_WRITABLE|ATTRIBUTE_MASK_MANUFACTURER_SPECIFIC), { NULL } }, /* 90 / Manager / HistoricalEvent Attribute: 0x0001 0x10A2*/\
-    { 0x0015, ZCL_INT64U_ATTRIBUTE_TYPE, 8, (ATTRIBUTE_MASK_MANUFACTURER_SPECIFIC), { NULL } }, /* 91 / Manager / Ping Attribute: 0x0001 0x10A2*/\
-    { 0x0016, ZCL_INT64U_ATTRIBUTE_TYPE, 8, (ATTRIBUTE_MASK_MANUFACTURER_SPECIFIC), { NULL } }, /* 92 / Manager / Realtime Attribute: 0x0001 0x10A2*/\
-    { 0x0017, ZCL_INT16U_ATTRIBUTE_TYPE, 2, (ATTRIBUTE_MASK_TOKENIZE|ATTRIBUTE_MASK_MANUFACTURER_SPECIFIC), { (uint8_t*)0x0000UL } }, /* 93 / Manager / Dimming Attribute: 0x0001 0x10A2*/\
-    { 0xFFFD, ZCL_INT16U_ATTRIBUTE_TYPE, 2, (ATTRIBUTE_MASK_TOKENIZE), { (uint8_t*)0x0001 } }, /* 94 / Manager / cluster revision*/\
+    { 0x0000, ZCL_INT16U_ATTRIBUTE_TYPE, 2, (0x00), { (uint8_t*)0x0000 } }, /* 85 / Illuminance Measurement / measured value*/\
+    { 0x0001, ZCL_INT16U_ATTRIBUTE_TYPE, 2, (0x00), { (uint8_t*)0x0000UL } }, /* 86 / Illuminance Measurement / min measured value*/\
+    { 0x0002, ZCL_INT16U_ATTRIBUTE_TYPE, 2, (0x00), { (uint8_t*)0x0000UL } }, /* 87 / Illuminance Measurement / max measured value*/\
+    { 0xFFFD, ZCL_INT16U_ATTRIBUTE_TYPE, 2, (0x00), { (uint8_t*)0x0001 } }, /* 88 / Illuminance Measurement / cluster revision*/\
+    { 0xFFFD, ZCL_INT16U_ATTRIBUTE_TYPE, 2, (0x00), { (uint8_t*)0x0001 } }, /* 89 / ZLL Commissioning / cluster revision*/\
+    { 0x0010, ZCL_CHAR_STRING_ATTRIBUTE_TYPE, 113, (ATTRIBUTE_MASK_WRITABLE|ATTRIBUTE_MASK_MANUFACTURER_SPECIFIC), { (uint8_t*)&(generatedDefaults[34]) } }, /* 90 / Manager / OnOffSchedule Attribute: 0x0000 0x10A2*/\
+    { 0x0011, ZCL_CHAR_STRING_ATTRIBUTE_TYPE, 129, (ATTRIBUTE_MASK_WRITABLE|ATTRIBUTE_MASK_MANUFACTURER_SPECIFIC), { NULL } }, /* 91 / Manager / DimmingSchedule Attribute: 0x0000 0x10A2*/\
+    { 0x0012, ZCL_CHAR_STRING_ATTRIBUTE_TYPE, 101, (ATTRIBUTE_MASK_WRITABLE|ATTRIBUTE_MASK_MANUFACTURER_SPECIFIC), { NULL } }, /* 92 / Manager / Group Attribute: 0x0001 0x10A2*/\
+    { 0x0013, ZCL_INT16U_ATTRIBUTE_TYPE, 2, (ATTRIBUTE_MASK_TOKENIZE|ATTRIBUTE_MASK_MANUFACTURER_SPECIFIC), { (uint8_t*)0x0000UL } }, /* 93 / Manager / ReportTimec Attribute: 0x0001 0x10A2*/\
+    { 0x0014, ZCL_CHAR_STRING_ATTRIBUTE_TYPE, 101, (ATTRIBUTE_MASK_WRITABLE|ATTRIBUTE_MASK_MANUFACTURER_SPECIFIC), { NULL } }, /* 94 / Manager / HistoricalEvent Attribute: 0x0001 0x10A2*/\
+    { 0x0015, ZCL_INT64U_ATTRIBUTE_TYPE, 8, (ATTRIBUTE_MASK_MANUFACTURER_SPECIFIC), { NULL } }, /* 95 / Manager / Ping Attribute: 0x0001 0x10A2*/\
+    { 0x0016, ZCL_INT64U_ATTRIBUTE_TYPE, 8, (ATTRIBUTE_MASK_MANUFACTURER_SPECIFIC), { NULL } }, /* 96 / Manager / Realtime Attribute: 0x0001 0x10A2*/\
+    { 0x0017, ZCL_INT16U_ATTRIBUTE_TYPE, 2, (ATTRIBUTE_MASK_TOKENIZE|ATTRIBUTE_MASK_MANUFACTURER_SPECIFIC), { (uint8_t*)0x0000UL } }, /* 97 / Manager / Dimming Attribute: 0x0001 0x10A2*/\
+    { 0x0018, ZCL_INT8U_ATTRIBUTE_TYPE, 1, (ATTRIBUTE_MASK_TOKENIZE|ATTRIBUTE_MASK_MANUFACTURER_SPECIFIC), { (uint8_t*)0x00UL } }, /* 98 / Manager / TimeReport Attribute: 0x0001 0x10A2*/\
+    { 0xFFFD, ZCL_INT16U_ATTRIBUTE_TYPE, 2, (ATTRIBUTE_MASK_TOKENIZE), { (uint8_t*)0x0001 } }, /* 99 / Manager / cluster revision*/\
   }
 
 
@@ -141,7 +146,7 @@ const EmberAfGenericClusterFunction emberAfFuncArrayIdentifyClusterServer[] = { 
 const EmberAfGenericClusterFunction emberAfFuncArrayGroupsClusterServer[] = { (EmberAfGenericClusterFunction)emberAfGroupsClusterServerInitCallback}; \
 const EmberAfGenericClusterFunction emberAfFuncArrayScenesClusterServer[] = { (EmberAfGenericClusterFunction)emberAfScenesClusterServerInitCallback}; \
 const EmberAfGenericClusterFunction emberAfFuncArrayOnOffClusterServer[] = { (EmberAfGenericClusterFunction)emberAfOnOffClusterServerInitCallback,(EmberAfGenericClusterFunction)emberAfOnOffClusterServerAttributeChangedCallback}; \
-const EmberAfGenericClusterFunction emberAfFuncArrayLevelControlClusterServer[] = { (EmberAfGenericClusterFunction)emberAfLevelControlClusterServerInitCallback}; \
+const EmberAfGenericClusterFunction emberAfFuncArrayLevelControlClusterServer[] = { (EmberAfGenericClusterFunction)emberAfLevelControlClusterServerInitCallback,(EmberAfGenericClusterFunction)emberAfLevelControlClusterServerAttributeChangedCallback}; \
 const EmberAfGenericClusterFunction emberAfFuncArrayOtaBootloadClusterClient[] = { (EmberAfGenericClusterFunction)emberAfOtaBootloadClusterClientInitCallback,(EmberAfGenericClusterFunction)emberAfOtaBootloadClusterClientDefaultResponseCallback}; \
 const EmberAfGenericClusterFunction emberAfFuncArrayColorControlClusterServer[] = { (EmberAfGenericClusterFunction)emberAfColorControlClusterServerInitCallback}; \
 
@@ -153,26 +158,27 @@ const EmberAfGenericClusterFunction emberAfFuncArrayColorControlClusterServer[] 
     { 0x0004, (EmberAfAttributeMetadata*)&(generatedAttributes[16]), 2, 3, (CLUSTER_MASK_SERVER| CLUSTER_MASK_INIT_FUNCTION), emberAfFuncArrayGroupsClusterServer, },    \
     { 0x0005, (EmberAfAttributeMetadata*)&(generatedAttributes[18]), 6, 8, (CLUSTER_MASK_SERVER| CLUSTER_MASK_INIT_FUNCTION), emberAfFuncArrayScenesClusterServer, },    \
     { 0x0006, (EmberAfAttributeMetadata*)&(generatedAttributes[24]), 6, 9, (CLUSTER_MASK_SERVER| CLUSTER_MASK_INIT_FUNCTION| CLUSTER_MASK_ATTRIBUTE_CHANGED_FUNCTION), emberAfFuncArrayOnOffClusterServer, },    \
-    { 0x0008, (EmberAfAttributeMetadata*)&(generatedAttributes[30]), 5, 7, (CLUSTER_MASK_SERVER| CLUSTER_MASK_INIT_FUNCTION), emberAfFuncArrayLevelControlClusterServer, },    \
+    { 0x0008, (EmberAfAttributeMetadata*)&(generatedAttributes[30]), 5, 7, (CLUSTER_MASK_SERVER| CLUSTER_MASK_INIT_FUNCTION| CLUSTER_MASK_ATTRIBUTE_CHANGED_FUNCTION), emberAfFuncArrayLevelControlClusterServer, },    \
     { 0x0019, (EmberAfAttributeMetadata*)&(generatedAttributes[35]), 4, 15, (CLUSTER_MASK_CLIENT| CLUSTER_MASK_INIT_FUNCTION| CLUSTER_MASK_DEFAULT_RESPONSE_FUNCTION), emberAfFuncArrayOtaBootloadClusterClient, },    \
-    { 0xFC10, (EmberAfAttributeMetadata*)&(generatedAttributes[86]), 9, 466, (CLUSTER_MASK_SERVER), NULL,  },    \
+    { 0x0400, (EmberAfAttributeMetadata*)&(generatedAttributes[85]), 4, 8, (CLUSTER_MASK_SERVER), NULL,  },    \
+    { 0xFC10, (EmberAfAttributeMetadata*)&(generatedAttributes[90]), 10, 467, (CLUSTER_MASK_SERVER), NULL,  },    \
     { 0x0000, (EmberAfAttributeMetadata*)&(generatedAttributes[0]), 14, 0, (CLUSTER_MASK_SERVER), NULL,  },    \
     { 0x0003, (EmberAfAttributeMetadata*)&(generatedAttributes[14]), 2, 4, (CLUSTER_MASK_SERVER| CLUSTER_MASK_INIT_FUNCTION| CLUSTER_MASK_ATTRIBUTE_CHANGED_FUNCTION), emberAfFuncArrayIdentifyClusterServer, },    \
     { 0x0004, (EmberAfAttributeMetadata*)&(generatedAttributes[16]), 2, 3, (CLUSTER_MASK_SERVER| CLUSTER_MASK_INIT_FUNCTION), emberAfFuncArrayGroupsClusterServer, },    \
     { 0x0005, (EmberAfAttributeMetadata*)&(generatedAttributes[18]), 6, 8, (CLUSTER_MASK_SERVER| CLUSTER_MASK_INIT_FUNCTION), emberAfFuncArrayScenesClusterServer, },    \
     { 0x0006, (EmberAfAttributeMetadata*)&(generatedAttributes[24]), 6, 9, (CLUSTER_MASK_SERVER| CLUSTER_MASK_INIT_FUNCTION| CLUSTER_MASK_ATTRIBUTE_CHANGED_FUNCTION), emberAfFuncArrayOnOffClusterServer, },    \
-    { 0x0008, (EmberAfAttributeMetadata*)&(generatedAttributes[30]), 5, 7, (CLUSTER_MASK_SERVER| CLUSTER_MASK_INIT_FUNCTION), emberAfFuncArrayLevelControlClusterServer, },    \
+    { 0x0008, (EmberAfAttributeMetadata*)&(generatedAttributes[30]), 5, 7, (CLUSTER_MASK_SERVER| CLUSTER_MASK_INIT_FUNCTION| CLUSTER_MASK_ATTRIBUTE_CHANGED_FUNCTION), emberAfFuncArrayLevelControlClusterServer, },    \
     { 0x0300, (EmberAfAttributeMetadata*)&(generatedAttributes[45]), 40, 66, (CLUSTER_MASK_SERVER| CLUSTER_MASK_INIT_FUNCTION), emberAfFuncArrayColorControlClusterServer, },    \
-    { 0x1000, (EmberAfAttributeMetadata*)&(generatedAttributes[85]), 1, 2, (CLUSTER_MASK_SERVER), NULL,  },    \
+    { 0x1000, (EmberAfAttributeMetadata*)&(generatedAttributes[89]), 1, 2, (CLUSTER_MASK_SERVER), NULL,  },    \
     { 0x0021, (EmberAfAttributeMetadata*)&(generatedAttributes[39]), 6, 27, (CLUSTER_MASK_CLIENT), NULL,  },    \
   }
 
 
 // Endpoint types
 #define GENERATED_ENDPOINT_TYPES {        \
-    { (EmberAfCluster*)&(generatedClusters[0]), 8, 512 }, \
-    { (EmberAfCluster*)&(generatedClusters[8]), 8, 99 }, \
-    { (EmberAfCluster*)&(generatedClusters[16]), 1, 27 }, \
+    { (EmberAfCluster*)&(generatedClusters[0]), 9, 521 }, \
+    { (EmberAfCluster*)&(generatedClusters[9]), 8, 99 }, \
+    { (EmberAfCluster*)&(generatedClusters[17]), 1, 27 }, \
   }
 
 
@@ -193,22 +199,23 @@ const EmberAfGenericClusterFunction emberAfFuncArrayColorControlClusterServer[] 
 
 // Cluster manufacturer codes
 #define GENERATED_CLUSTER_MANUFACTURER_CODES {      \
-{0x0007, 0x10A2}, \
+{0x0008, 0x10A2}, \
   }
 #define GENERATED_CLUSTER_MANUFACTURER_CODE_COUNT (1)
 
 // Attribute manufacturer codes
 #define GENERATED_ATTRIBUTE_MANUFACTURER_CODES {      \
-{0x0056, 0x10A2}, \
-{0x0057, 0x10A2}, \
-{0x0058, 0x10A2}, \
-{0x0059, 0x10A2}, \
+{0x0060, 0x10A2}, \
+{0x0061, 0x10A2}, \
+{0x0062, 0x10A2}, \
 {0x005A, 0x10A2}, \
 {0x005B, 0x10A2}, \
 {0x005C, 0x10A2}, \
 {0x005D, 0x10A2}, \
+{0x005E, 0x10A2}, \
+{0x005F, 0x10A2}, \
   }
-#define GENERATED_ATTRIBUTE_MANUFACTURER_CODE_COUNT (8)
+#define GENERATED_ATTRIBUTE_MANUFACTURER_CODE_COUNT (9)
 
 
 // Largest attribute size is needed for various buffers
@@ -217,7 +224,7 @@ const EmberAfGenericClusterFunction emberAfFuncArrayColorControlClusterServer[] 
 #define ATTRIBUTE_SINGLETONS_SIZE (191)
 
 // Total size of attribute storage
-#define ATTRIBUTE_MAX_SIZE 638
+#define ATTRIBUTE_MAX_SIZE 647
 
 // Array of endpoints that are supported
 #define FIXED_ENDPOINT_ARRAY { 1, 2, 242 }
@@ -513,12 +520,14 @@ const EmberAfGenericClusterFunction emberAfFuncArrayColorControlClusterServer[] 
     { 0xFC10, 0x00, COMMAND_MASK_INCOMING_SERVER | COMMAND_MASK_MANUFACTURER_SPECIFIC }, /* Manager / PutOnOffSchedule */ \
     { 0xFC10, 0x02, COMMAND_MASK_INCOMING_SERVER | COMMAND_MASK_MANUFACTURER_SPECIFIC }, /* Manager / PutDimmingSchedule */ \
     { 0xFC10, 0x05, COMMAND_MASK_INCOMING_SERVER | COMMAND_MASK_MANUFACTURER_SPECIFIC }, /* Manager / PutGroup */ \
+    { 0xFC10, 0x06, COMMAND_MASK_INCOMING_SERVER | COMMAND_MASK_MANUFACTURER_SPECIFIC }, /* Manager / GetReportTime */ \
     { 0xFC10, 0x07, COMMAND_MASK_INCOMING_SERVER | COMMAND_MASK_MANUFACTURER_SPECIFIC }, /* Manager / PutReportTime */ \
+    { 0xFC10, 0x10, COMMAND_MASK_INCOMING_SERVER | COMMAND_MASK_MANUFACTURER_SPECIFIC }, /* Manager / GetPing */ \
     { 0xFC10, 0x11, COMMAND_MASK_INCOMING_SERVER | COMMAND_MASK_MANUFACTURER_SPECIFIC }, /* Manager / PutPing */ \
     { 0xFC10, 0x13, COMMAND_MASK_INCOMING_SERVER | COMMAND_MASK_MANUFACTURER_SPECIFIC }, /* Manager / PutReportRealTime */ \
     { 0xFC10, 0x15, COMMAND_MASK_INCOMING_SERVER | COMMAND_MASK_MANUFACTURER_SPECIFIC }, /* Manager / PutDimming */ \
   }
-#define EMBER_AF_GENERATED_COMMAND_COUNT (85)
+#define EMBER_AF_GENERATED_COMMAND_COUNT (87)
 
 // Command manufacturer codes
 #define GENERATED_COMMAND_MANUFACTURER_CODES {      \
@@ -527,16 +536,19 @@ const EmberAfGenericClusterFunction emberAfFuncArrayColorControlClusterServer[] 
 {0x0052, 0x10A2}, \
 {0x0053, 0x10A2}, \
 {0x0054, 0x10A2}, \
+{0x0055, 0x10A2}, \
+{0x0056, 0x10A2}, \
 {0x004E, 0x10A2}, \
 {0x004F, 0x10A2}, \
   }
-#define GENERATED_COMMAND_MANUFACTURER_CODE_COUNT (7)
+#define GENERATED_COMMAND_MANUFACTURER_CODE_COUNT (9)
 
 
 // Generated reporting configuration defaults
 #define EMBER_AF_GENERATED_REPORTING_CONFIG_DEFAULTS {\
   { EMBER_ZCL_REPORTING_DIRECTION_REPORTED, 1, 0x0006, 0x0000, CLUSTER_MASK_SERVER, 0x0000, 1, 65534, 0 }, \
   { EMBER_ZCL_REPORTING_DIRECTION_REPORTED, 1, 0x0008, 0x0000, CLUSTER_MASK_SERVER, 0x0000, 10, 60, 1 }, \
+  { EMBER_ZCL_REPORTING_DIRECTION_REPORTED, 1, 0x0400, 0x0000, CLUSTER_MASK_SERVER, 0x0000, 1, 65534, 0 }, \
   { EMBER_ZCL_REPORTING_DIRECTION_REPORTED, 2, 0x0006, 0x0000, CLUSTER_MASK_SERVER, 0x0000, 1, 65534, 0 }, \
   { EMBER_ZCL_REPORTING_DIRECTION_REPORTED, 2, 0x0008, 0x0000, CLUSTER_MASK_SERVER, 0x0000, 10, 60, 1 }, \
   { EMBER_ZCL_REPORTING_DIRECTION_REPORTED, 2, 0x0300, 0x0000, CLUSTER_MASK_SERVER, 0x0000, 1, 65534, 0 }, \
@@ -545,5 +557,5 @@ const EmberAfGenericClusterFunction emberAfFuncArrayColorControlClusterServer[] 
   { EMBER_ZCL_REPORTING_DIRECTION_REPORTED, 2, 0x0300, 0x0004, CLUSTER_MASK_SERVER, 0x0000, 1, 65534, 0 }, \
   { EMBER_ZCL_REPORTING_DIRECTION_REPORTED, 2, 0x0300, 0x0007, CLUSTER_MASK_SERVER, 0x0000, 1, 65534, 0 }, \
 }
-#define EMBER_AF_GENERATED_REPORTING_CONFIG_DEFAULTS_TABLE_SIZE (9)
+#define EMBER_AF_GENERATED_REPORTING_CONFIG_DEFAULTS_TABLE_SIZE (10)
 #endif // SILABS_AF_ENDPOINT_CONFIG

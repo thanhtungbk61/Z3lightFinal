@@ -4746,6 +4746,7 @@
 #define ZCL_Ping_ATTRIBUTE_ID                            0x0015 // Ver.: always
 #define ZCL_Realtime_ATTRIBUTE_ID                        0x0016 // Ver.: always
 #define ZCL_Dimming_ATTRIBUTE_ID                         0x0017 // Ver.: always
+#define ZCL_timeReport_ATTRIBUTE_ID                      0x0018 // Ver.: always
 #define ZCL_MANAGER_CLUSTER_REVISION_SERVER_ATTRIBUTE_ID 0xFFFD // Ver.: since zcl-6.0-15-02017-001
 #define ZCL_MANAGER_REPORTING_STATUS_SERVER_ATTRIBUTE_ID 0xFFFE // Ver.: since zcl-6.0-15-02017-001
 

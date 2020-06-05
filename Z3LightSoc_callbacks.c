@@ -53,6 +53,8 @@ char* alarm_date ="010203";
 char* alarm_time ="123130";
 uint8_t pingReport[8];
 uint8_t pingLen =8;
+volatile uint16_t reportTime =30;
+volatile uint8_t scheTimeCheck=10;
 void emberAfGroupsClusterServerAttributeChangedCallback(int8u endpoint,
                                                         EmberAfAttributeId attributeId)
 {
@@ -95,7 +97,6 @@ void scheduleHandler()
 	}
 	else
 	{
-
 		uint16_t year=0;
 		uint8_t month=0;
 		uint8_t day=0;
@@ -121,54 +122,58 @@ void scheduleHandler()
 		}
 		for(int i=0;i<DIMMINGSCHMAX;i++)
 		{
-			if(dimmingSchRam[i].time.hour==hour&&dimmingSchRam[i].time.minute==min)
+			if(dimmingSchRam[i].time.hour==hour && dimmingSchRam[i].time.minute==min)
 			{
-				for(int j=0;j<GROUPSCHMAX;j++)
+				if(sec<scheTimeCheck)
 				{
-					if((dimmingSchRam[i].address ==SELFADDRESS) || (dimmingSchRam[i].address==groupSchRam[j].address))
+					for(int j=0;j<GROUPSCHMAX;j++)
 					{
-						uint8_t dimmingValue= (uint8_t)dimmingSchRam[i].value;
-						emberAfWriteServerAttribute(1,ZCL_LEVEL_CONTROL_CLUSTER_ID,ZCL_CURRENT_LEVEL_ATTRIBUTE_ID,(uint8_t *)&dimmingValue,0x20);
-						if(onOffSchRam[i].value==1)
+						if((dimmingSchRam[i].address ==SELFADDRESS) || (dimmingSchRam[i].address==groupSchRam[j].address))
 						{
-							setLevel(dimmingValue);
+							uint8_t dimmingValue= (uint8_t)dimmingSchRam[i].value;
+							emberAfWriteServerAttribute(1,ZCL_LEVEL_CONTROL_CLUSTER_ID,ZCL_CURRENT_LEVEL_ATTRIBUTE_ID,(uint8_t *)&dimmingValue,0x20);
+							if(onOffSchRam[i].value==1)
+							{
+								setLevel(dimmingValue);
+							}
+							else
+							{
+								setLevel(dimmingValue);
+							}
+							break;
 						}
-						else
-						{
-							setLevel(dimmingValue);
-						}
-						break;
 					}
 				}
-
 			}
 		}
 		for(int i=0;i<ONOFFSCHEDULEMAX;i++)
 		{
-			if(onOffSchRam[i].time.hour==hour&&onOffSchRam[i].time.minute==min)
+			if(onOffSchRam[i].time.hour==hour && onOffSchRam[i].time.minute==min)
 			{
-				for(int j=0;j<GROUPSCHMAX;j++)
+				if(sec<scheTimeCheck)
 				{
-					if((onOffSchRam[i].address ==SELFADDRESS) || (onOffSchRam[i].address==groupSchRam[j].address))
+					for(int j=0;j<GROUPSCHMAX;j++)
 					{
-						bool onoffValue=onOffSchRam[i].value;
-						emberAfWriteServerAttribute(1,ZCL_ON_OFF_CLUSTER_ID,ZCL_ON_OFF_ATTRIBUTE_ID,(uint8_t *)&onoffValue,0x10);
-						if(onOffSchRam[i].value==1)
+						if((onOffSchRam[i].address ==SELFADDRESS) || (onOffSchRam[i].address==groupSchRam[j].address))
 						{
-							setLevel(100);
+							bool onoffValue=onOffSchRam[i].value;
+							emberAfWriteServerAttribute(1,ZCL_ON_OFF_CLUSTER_ID,ZCL_ON_OFF_ATTRIBUTE_ID,(uint8_t *)&onoffValue,0x10);
+							if(onOffSchRam[i].value==1)
+							{
+								setLevel(100);
+							}
+							else
+							{
+								setLevel(0);
+							}
+							break;
 						}
-						else
-						{
-							setLevel(0);
-						}
-						break;
 					}
 				}
-
 			}
 		}
 
-		emberEventControlSetDelayMS(scheduleControl, 10 * MY_DELAY_IN_MS);
+		emberEventControlSetDelayMS(scheduleControl, scheTimeCheck * MY_DELAY_IN_MS);
 	}
 }
 
@@ -194,19 +199,20 @@ void myDelayHandler(void)
 	{
 		if(mydelayCount%2)
 		{
+			emberAfCorePrintln("reportLevelAttribute");
 			reportLevelAttribute();
 		}
-		if(mydelayCount%3)
+		else if(mydelayCount%3)
 		{
-//			reportPing(pingReport);
+			emberAfCorePrintln("reportSensor");
+			reportSensor();
 		}
 		else
 		{
+			emberAfCorePrintln("reportLightAttribute");
 			reportLightAttribute();
 		}
-
-
-		emberEventControlSetDelayMS(myDelay, 50 * MY_DELAY_IN_MS);
+		emberEventControlSetDelayMS(myDelay, reportTime * MY_DELAY_IN_MS);
 	}
 	uint16_t nodeId =emberAfGetNodeId();
 	emberAfCorePrintln("emberAfGetNodeId:%d",nodeId);
@@ -214,10 +220,7 @@ void myDelayHandler(void)
 
 void emberAfMainInitCallback(void)
 {
-
-
 	// init value of cluster
-
 	pwmInit();
 	TIMER_CompareBufSet(TIMER1, TIMER_CHANNEL, 100);
 
@@ -246,8 +249,10 @@ void commissioningLedEventHandler(void)
 	    dimmingSchFlash2RamV2();
 	    groupSchFlash2RamV2();
 	    //
-		uint8_t dimmingValue=0,status;
+		uint8_t dimmingValue=100,status;
 		bool onoffValue=0;
+		//status =emberAfWriteManufacturerSpecificClientAttribute(1,ZCL_MANAGER_ID,ZCL_ReportTime_ATTRIBUTE_ID,0x10A2,&reportTime,0x21);
+		////emberAfCorePrintln("emberAfWriteManufacturerSpecificClientAttribute--reportTime:%d---status:%d",status,reportTime);
 		status= emberAfWriteServerAttribute(1,ZCL_LEVEL_CONTROL_CLUSTER_ID,ZCL_CURRENT_LEVEL_ATTRIBUTE_ID,&dimmingValue,0x20);
 		emberAfCorePrintln("emberAfWriteServerAttribute:%d",status);
 		status =emberAfWriteServerAttribute(1,ZCL_ON_OFF_CLUSTER_ID,ZCL_ON_OFF_ATTRIBUTE_ID,(uint8_t *)&onoffValue,0x10);
@@ -277,8 +282,8 @@ void findingAndBindingEventHandler()
 	emberEventControlSetInactive(findingAndBindingEventControl);
 	uint32_t time = RTCC_CounterGet();
 
-	  char test_onoff_array_have_error[ONOFFSCHEDULEMAX * ONOFFSCHEDULESIZE] = {0x12, 0x34, 0, 21, 15, 30, 1, 0x12, 0x34, 0, 0, 0, 0, 1, 0x12, 0x34, 0, 23, 30, 15, 0,0x12, 0x34, 0, 21, 15, 30, 1, 0x12, 0x34, 0, 0, 0, 0, 1, 0x12, 0x34, 0, 23, 30, 15, 0,0x12, 0x34, 0, 21, 15, 30, 1, 0x12, 0x34, 0, 0, 0, 0, 1, 0x12, 0x34, 0, 23, 30, 15, 0,0x12, 0x34, 0, 21, 15, 30, 1, 0x12, 0x34, 0, 0, 0, 0, 1, 0x12, 0x34, 0, 23, 30, 15, 0,0x12, 0x34, 0, 21, 15, 30, 1, 0x12, 0x34, 0, 0, 0, 0, 1, 0x12, 0x34, 0, 23, 30, 15, 0,0x12, 0x34, 0, 21, 15, 30, 1};
-
+//	  char test_onoff_array_have_error[ONOFFSCHEDULEMAX * ONOFFSCHEDULESIZE] = {0x12, 0x34, 0, 21, 15, 30, 1, 0x12, 0x34, 0, 0, 0, 0, 1, 0x12, 0x34, 0, 23, 30, 15, 0,0x12, 0x34, 0, 21, 15, 30, 1, 0x12, 0x34, 0, 0, 0, 0, 1, 0x12, 0x34, 0, 23, 30, 15, 0,0x12, 0x34, 0, 21, 15, 30, 1, 0x12, 0x34, 0, 0, 0, 0, 1, 0x12, 0x34, 0, 23, 30, 15, 0,0x12, 0x34, 0, 21, 15, 30, 1, 0x12, 0x34, 0, 0, 0, 0, 1, 0x12, 0x34, 0, 23, 30, 15, 0,0x12, 0x34, 0, 21, 15, 30, 1, 0x12, 0x34, 0, 0, 0, 0, 1, 0x12, 0x34, 0, 23, 30, 15, 0,0x12, 0x34, 0, 21, 15, 30, 1};
+//
 //	  writeOnOffSch2FlashV2(test_onoff_array_have_error);
 //	  for (int i = 0; i < ONOFFSCHEDULEMAX; i++)
 //	  {
@@ -433,11 +438,18 @@ void emberAfOnOffClusterServerAttributeChangedCallback(uint8_t endpoint,
                                                        EmberAfAttributeId attributeId)
 {
 
+
   // When the on/off attribute changes, set the LED appropriately.  If an error
   // occurs, ignore it because there's really nothing we can do.
   if (attributeId == ZCL_ON_OFF_ATTRIBUTE_ID) {
 		emberAfCorePrintln("emberAfOnOffClusterServerAttributeChangedCallback");
     bool onOff;
+    uint8_t level;
+    emberAfReadServerAttribute(endpoint,
+      	    							   ZCL_LEVEL_CONTROL_CLUSTER_ID,
+      									   ZCL_CURRENT_LEVEL_ATTRIBUTE_ID,
+      	                                   (uint8_t *)&level,
+      	                                   sizeof(level));
     if (emberAfReadServerAttribute(endpoint,
                                    ZCL_ON_OFF_CLUSTER_ID,
                                    ZCL_ON_OFF_ATTRIBUTE_ID,
@@ -445,8 +457,9 @@ void emberAfOnOffClusterServerAttributeChangedCallback(uint8_t endpoint,
                                    sizeof(onOff))
         == EMBER_ZCL_STATUS_SUCCESS) {
       if (onOff) {
-    	  emberAfCorePrintln("halSetLed");
+    	  emberAfCorePrintln("halSetLed---level:%d",level);
     	  GPIO_PinOutSet(LED_PORT,LED_PIN);
+    	  setLevel(level);
         //halSetLed(ON_OFF_LIGHT_LED);
       } else {
     	  emberAfCorePrintln("halClearLed");
@@ -634,6 +647,14 @@ boolean emberAfManagerPutHistoricalEventCallback(int8u* HistoryStr)
 
 boolean emberAfManagerPutReportTimeCallback(int16u reportStr)
 {
+	reportTime = reportStr;
+	emberAfCorePrintln("emberAfManagerPutReportTimeCallback:%d",reportTime);
+	return 1;
+}
+
+boolean emberAfManagerGetReportTimeCallback(int16u reportStr)
+{
+	emberAfCorePrintln("emberAfManagerGetReportTimeCallback");
 	return 1;
 }
 
@@ -642,6 +663,7 @@ boolean emberAfManagerPutPingCallback(uint8_t* Ping)
 	emberAfCorePrintln("emberAfManagerPutPingCallback--:%d",Ping);
 	for(int i=0;i<pingLen;i++)
 	{
+		emberAfCorePrintln("ping[i]--:%d",Ping[i]);
 		pingReport[i] = Ping[i];
 	}
 	return 1;

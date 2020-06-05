@@ -106,6 +106,38 @@ uint8_t reportLevelAttribute()
     }
 	return status;
 }
+
+uint8_t reportSensor()
+{
+	static uint16_t count;
+	count++;
+	emberAfWriteServerAttribute(1,ZCL_ILLUM_MEASUREMENT_CLUSTER_ID,ZCL_ILLUM_MEASURED_VALUE_ATTRIBUTE_ID,&count,0x21);
+	uint16_t value;
+	uint8_t status=1;
+//    if (emberAfReadServerAttribute(1,
+//    		ZCL_ILLUM_MEASUREMENT_CLUSTER_ID,
+//			ZCL_ILLUM_MEASURED_VALUE_ATTRIBUTE_ID,
+//            (uint8_t *)&value,
+//            sizeof(value))
+//        == EMBER_ZCL_STATUS_SUCCESS)
+//    {
+	//uint8_t attributeId[2] ={0x40,0x02};
+	uint8_t buf[6];
+	buf[0] =0;  // attribute
+	buf[1]=0;   // attribute
+	buf[2]=0;   // status
+	buf[3]=0x20;  // type value
+	buf[4]=(uint8_t)count;  //  value
+	buf[5]=(uint8_t) count&0x00ff;
+	emberAfFillCommandGlobalServerToClientReportAttributes(ZCL_ILLUM_MEASUREMENT_CLUSTER_ID,buf,6);
+	emAfCommandApsFrame->profileId=emberAfProfileIdFromIndex(0);
+//	emAfCommandApsFrame->clusterId =0x0006;
+	emAfCommandApsFrame->sourceEndpoint	=emberAfEndpointFromIndex(0);
+	emAfCommandApsFrame->destinationEndpoint =0x0001;
+	status =emberAfSendCommandUnicast(EMBER_OUTGOING_DIRECT,0x0000);
+//    }
+	return status;
+}
 uint8_t reportLightAttribute()
 {
 	bool onOff;

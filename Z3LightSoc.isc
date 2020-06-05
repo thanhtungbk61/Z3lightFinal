@@ -326,7 +326,7 @@ OverrideServer:300,exclude,Centralized
 
 OverrideServer:301,exclude,Centralized
 
-OverrideServer:400,exclude,Centralized
+OverrideServer:400,include,Centralized
 
 OverrideServer:401,exclude,Centralized
 
@@ -517,12 +517,12 @@ ZigbeeProNetwork:*Primary,ZA_ROUTER,Z3
 #  A list of optional attributes that are included in this configuration. Format
 #  is a list of "clusterId,attributeId,<server|client>,manufacturerCode"
 #  entries, separated by a colon.
-OptionalAttributes:64528,16,server,4258:64528,17,server,4258:64528,18,server,4258:64528,19,server,4258:64528,20,server,4258:64528,21,server,4258:64528,22,server,4258:64528,23,server,4258
+OptionalAttributes:64528,16,server,4258:64528,17,server,4258:64528,18,server,4258:64528,19,server,4258:64528,20,server,4258:64528,21,server,4258:64528,22,server,4258:64528,23,server,4258:64528,24,server,4258
 
 #  A list of attributes that are to be saved as tokens in persistent memory.
 #  Format is a list of "clusterId,attributeId,<server|client>,manufacturerCode"
 #  entries, separated by a colon.
-FlashAttributes:6,0,server,0:6,16387,server,0:8,0,server,0:8,16384,server,0:768,7,server,0:768,16400,server,0:64528,23,server,4258:64528,65533,server,0
+FlashAttributes:6,0,server,0:6,16387,server,0:8,0,server,0:8,16384,server,0:768,7,server,0:768,16400,server,0:64528,23,server,4258:64528,65533,server,0:64528,24,server,4258:64528,19,server,4258
 
 #  User defined default values for attributes.
 AttributeDefaults:6,16387,server,0,0xFF:8,16384,server,0,0x33:768,16400,server,0,0x4444
@@ -552,7 +552,7 @@ Platform:efr32~family[M]~series[1]~device_configuration[2]~performance[P]~radio[
 ExactArchitectureToolchain:com.silabs.ss.tool.ide.arm.toolchain.gnu.cdt:7.2.1.20170904
 
 #  Enable callbacks.
-Callbacks:emberAfMainInitCallback,emberAfStackStatusCallback,emberAfOnOffClusterServerAttributeChangedCallback,emberAfPluginOnOffClusterServerPostInitCallback,emberAfPluginNetworkSteeringCompleteCallback,emberAfPluginNetworkCreatorCompleteCallback,emberAfHalButtonIsrCallback,emberAfManagerPutOnOffScheduleCallback,emberAfManagerPutDimmingScheduleCallback,emberAfManagerPutGroupCallback,emberAfManagerPutReportTimeCallback,emberAfManagerPutPingCallback,emberAfManagerPutReportRealTimeCallback,emberAfManagerPutDimmingCallback,
+Callbacks:emberAfMainInitCallback,emberAfStackStatusCallback,emberAfOnOffClusterServerAttributeChangedCallback,emberAfPluginOnOffClusterServerPostInitCallback,emberAfPluginNetworkSteeringCompleteCallback,emberAfPluginNetworkCreatorCompleteCallback,emberAfHalButtonIsrCallback,emberAfManagerPutOnOffScheduleCallback,emberAfManagerPutDimmingScheduleCallback,emberAfManagerPutGroupCallback,emberAfManagerPutReportTimeCallback,emberAfManagerPutPingCallback,emberAfManagerPutReportRealTimeCallback,emberAfManagerPutDimmingCallback,emberAfLevelControlClusterServerAttributeChangedCallback,emberAfManagerGetPingCallback,emberAfManagerGetReportTimeCallback,
 
 #  Any customer-specific general purpose custom events.
 CustomEvents:commissioningLedEventControl,commissioningLedEventHandler
@@ -844,6 +844,19 @@ LED_BLINK_PERIOD_MS=2000
 - custom messages
 }
 {setupId:quizz
+}
+{setupId:rf4ce
+nodeCapabilities=0
+vendorId=65521
+vendorString=
+userString=
+deviceTypes=[254]
+profileIds=[0]
+power=3
+}
+{setupId:rf4ceMso
+}
+{setupId:rf4ceZrc
 }
 {setupId:serial
 useHwConfigurator=true

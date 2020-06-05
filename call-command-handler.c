@@ -85,6 +85,9 @@ EmberAfStatus emberAfClusterSpecificCommandParse(EmberAfClusterCommand *cmd)
     case ZCL_COLOR_CONTROL_CLUSTER_ID:
       result = emberAfColorControlClusterServerCommandParse(cmd);
       break;
+    case ZCL_ILLUM_MEASUREMENT_CLUSTER_ID:
+      result = status(false, true, cmd->mfgSpecific);
+      break;
     case ZCL_ZLL_COMMISSIONING_CLUSTER_ID:
       result = emberAfZllCommissioningClusterServerCommandParse(cmd);
       break;
@@ -1736,6 +1739,13 @@ EmberAfStatus emberAfManagerServerCommandParse(EmberAfClusterCommand *cmd)
       if (cmd->bufLen < payloadOffset + emberAfStringLength(cmd->buffer + payloadOffset) + 1u) { return EMBER_ZCL_STATUS_MALFORMED_COMMAND; }
       groupStr = emberAfGetString(cmd->buffer, payloadOffset, cmd->bufLen);
       wasHandled = emberAfManagerPutGroupCallback(groupStr);
+    } else if (cmd->mfgCode == 0x10A2 && cmd->commandId == ZCL_GET_REPORT_TIME_COMMAND_ID) {
+      uint16_t payloadOffset = cmd->payloadStartIndex;
+      uint16_t reportStr;  // Ver.: always
+      // Command is fixed length: 2
+      if (cmd->bufLen < payloadOffset + 2u) { return EMBER_ZCL_STATUS_MALFORMED_COMMAND; }
+      reportStr = emberAfGetInt16u(cmd->buffer, payloadOffset, cmd->bufLen);
+      wasHandled = emberAfManagerGetReportTimeCallback(reportStr);
     } else if (cmd->mfgCode == 0x10A2 && cmd->commandId == ZCL_PUT_REPORT_TIME_COMMAND_ID) {
       uint16_t payloadOffset = cmd->payloadStartIndex;
       uint16_t reportStr;  // Ver.: always
@@ -1743,6 +1753,13 @@ EmberAfStatus emberAfManagerServerCommandParse(EmberAfClusterCommand *cmd)
       if (cmd->bufLen < payloadOffset + 2u) { return EMBER_ZCL_STATUS_MALFORMED_COMMAND; }
       reportStr = emberAfGetInt16u(cmd->buffer, payloadOffset, cmd->bufLen);
       wasHandled = emberAfManagerPutReportTimeCallback(reportStr);
+    } else if (cmd->mfgCode == 0x10A2 && cmd->commandId == ZCL_GET_PING_COMMAND_ID) {
+      uint16_t payloadOffset = cmd->payloadStartIndex;
+      uint8_t* Ping;  // Ver.: always
+      // Command is fixed length: 8
+      if (cmd->bufLen < payloadOffset + 8u) { return EMBER_ZCL_STATUS_MALFORMED_COMMAND; }
+      Ping = cmd->buffer + payloadOffset;
+      wasHandled = emberAfManagerGetPingCallback(Ping);
     } else if (cmd->mfgCode == 0x10A2 && cmd->commandId == ZCL_PUT_PING_COMMAND_ID) {
       uint16_t payloadOffset = cmd->payloadStartIndex;
       uint8_t* Ping;  // Ver.: always

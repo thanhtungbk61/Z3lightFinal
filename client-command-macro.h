@@ -13719,6 +13719,42 @@
                                                 dimming);
 
 
+/** @brief Client command getTimeReport.
+ *
+ * Cluster: Manager, This cluster provides an example of how the Application 
+      Framework can be extended to include manufacturer specific clusters.
+ * Command: GetTimeReport
+ * @param getTimeReport uint8_t
+ */
+#define emberAfFillCommandManagerGetTimeReport(getTimeReport) \
+  emberAfFillExternalManufacturerSpecificBuffer((ZCL_CLUSTER_SPECIFIC_COMMAND \
+                                                 | ZCL_MANUFACTURER_SPECIFIC_MASK \
+                                                 | ZCL_FRAME_CONTROL_CLIENT_TO_SERVER), \
+                                                ZCL_MANAGER_ID, \
+                                                0x10A2, \
+                                                ZCL_GET_TIME_REPORT_COMMAND_ID, \
+                                                "u", \
+                                                getTimeReport);
+
+
+/** @brief Client command puTimeReport.
+ *
+ * Cluster: Manager, This cluster provides an example of how the Application 
+      Framework can be extended to include manufacturer specific clusters.
+ * Command: PutTimeReport
+ * @param puTimeReport uint8_t
+ */
+#define emberAfFillCommandManagerPutTimeReport(puTimeReport) \
+  emberAfFillExternalManufacturerSpecificBuffer((ZCL_CLUSTER_SPECIFIC_COMMAND \
+                                                 | ZCL_MANUFACTURER_SPECIFIC_MASK \
+                                                 | ZCL_FRAME_CONTROL_CLIENT_TO_SERVER), \
+                                                ZCL_MANAGER_ID, \
+                                                0x10A2, \
+                                                ZCL_PUT_TIME_REPORT_COMMAND_ID, \
+                                                "u", \
+                                                puTimeReport);
+
+
 /** @} END Manager Commands */
 
 

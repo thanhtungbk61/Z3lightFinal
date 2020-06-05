@@ -1028,6 +1028,8 @@
 #define ZCL_PUT_REPORT_REAL_TIME_COMMAND_ID 0x13 // Ver.: always mfgCode: 0x10A2
 #define ZCL_GET_DIMMING_COMMAND_ID 0x14 // Ver.: always mfgCode: 0x10A2
 #define ZCL_PUT_DIMMING_COMMAND_ID 0x15 // Ver.: always mfgCode: 0x10A2
+#define ZCL_GET_TIME_REPORT_COMMAND_ID 0x16 // Ver.: always mfgCode: 0x10A2
+#define ZCL_PUT_TIME_REPORT_COMMAND_ID 0x17 // Ver.: always mfgCode: 0x10A2
 
 
 // Command types for cluster: SL Works With All Hubs
