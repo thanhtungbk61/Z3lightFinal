@@ -51,7 +51,7 @@ char* date ="010203";
 char* time ="123030";
 char* alarm_date ="010203";
 char* alarm_time ="123130";
-uint8_t pingReport[8];
+volatile uint8_t pingReport[8] = {0,0,0,0,0,0,0,0};
 uint8_t pingLen =8;
 volatile uint16_t reportTime =30;
 volatile uint8_t scheTimeCheck=10;
@@ -197,25 +197,33 @@ void myDelayHandler(void)
 	}
 	else
 	{
-		if(mydelayCount%2)
+		if(mydelayCount%4==0)
 		{
+			mydelayCount =0;
 			emberAfCorePrintln("reportLevelAttribute");
 			reportLevelAttribute();
 		}
-		else if(mydelayCount%3)
+		else if(mydelayCount%3==0)
 		{
 			emberAfCorePrintln("reportSensor");
 			reportSensor();
+		}
+		else if(mydelayCount%2==0)
+		{
+			emberAfCorePrintln("reportPing");
+			reportPing(pingReport);
 		}
 		else
 		{
 			emberAfCorePrintln("reportLightAttribute");
 			reportLightAttribute();
 		}
+//		emberAfCorePrintln("reportPing");
+//		reportPing(pingReport);
 		emberEventControlSetDelayMS(myDelay, reportTime * MY_DELAY_IN_MS);
+		uint16_t nodeId =emberAfGetNodeId();
+		emberAfCorePrintln("emberAfGetNodeId:%d",nodeId);
 	}
-	uint16_t nodeId =emberAfGetNodeId();
-	emberAfCorePrintln("emberAfGetNodeId:%d",nodeId);
 }
 
 void emberAfMainInitCallback(void)
@@ -224,9 +232,9 @@ void emberAfMainInitCallback(void)
 	pwmInit();
 	TIMER_CompareBufSet(TIMER1, TIMER_CHANNEL, 100);
 
-    emberEventControlSetActive(commissioningLedEventControl);
-    emberEventControlSetDelayMS(myDelay, 1 * MY_DELAY_IN_MS);
-    emberEventControlSetDelayMS(scheduleControl, 5 * MY_DELAY_IN_MS);
+	emberEventControlSetDelayMS(commissioningLedEventControl,15 * MY_DELAY_IN_MS);
+    emberEventControlSetDelayMS(myDelay, 20 * MY_DELAY_IN_MS);
+    emberEventControlSetDelayMS(scheduleControl, 30 * MY_DELAY_IN_MS);
 
 }
 // all callback
@@ -270,9 +278,9 @@ void commissioningLedEventHandler(void)
 	  }
 	  emberAfCorePrintln("toggle_led");
 //	  GPIO_PinOutToggle(LED_PORT,LED_PIN);
-	  emberEventControlSetDelayMS(commissioningLedEventControl,LED_BLINK_PERIOD_MS >>1);
-    EmberStatus status = emberAfPluginNetworkSteeringStart();
-    emberAfCorePrintln("%p network %p: 0x%X", "Join", "start", status);
+	  emberEventControlSetDelayMS(commissioningLedEventControl,3 * MY_DELAY_IN_MS);
+//    EmberStatus status = emberAfPluginNetworkSteeringStart();
+//    emberAfCorePrintln("%p network %p: 0x%X", "Join", "start", status);
   }
 }
 
@@ -532,18 +540,38 @@ void emberAfHalButtonIsrCallback(uint8_t button, uint8_t state)
 {
 
 //	emberAfZllInitiateTouchLink();
-  if (state == BUTTON_RELEASED) {
-	  // check flash
-    emberEventControlSetActive(findingAndBindingEventControl);
+	if(button == BUTTON0)
+	{
+		  if (state == BUTTON_RELEASED) {
+			  // check flash
+		    emberEventControlSetActive(findingAndBindingEventControl);
 
-	  if (emberAfNetworkState() == EMBER_JOINED_NETWORK) {
-	//    emberEventControlSetInactive(findingAndBindingEventControl);
-	    EmberStatus x = emberLeaveNetwork();
-	    emberAfCorePrintln("emberLeaveNetwork:%d",x);
-	//    emberAfCorePrintln("Find and bind target start: 0x%X",
-	//                       emberAfPluginFindAndBindTargetStart(LIGHT_ENDPOINT));
-	  }
-  }
+			  if (emberAfNetworkState() == EMBER_JOINED_NETWORK) {
+			//    emberEventControlSetInactive(findingAndBindingEventControl);
+			    EmberStatus x = emberLeaveNetwork();
+			    emberAfCorePrintln("emberLeaveNetwork:%d",x);
+			//    emberAfCorePrintln("Find and bind target start: 0x%X",
+			//                       emberAfPluginFindAndBindTargetStart(LIGHT_ENDPOINT));
+			  }
+		  }
+	}
+	else
+	{
+		if (state == BUTTON_RELEASED)
+		{
+			if(dayState == NIGHT)
+			{
+				emberAfCorePrintln("DAY");
+				dayState = DAY;
+			}
+			else
+			{
+				emberAfCorePrintln("NIGHT");
+				dayState = NIGHT;
+			}
+		}
+	}
+
 }
 
 // all  custom callback
@@ -648,6 +676,15 @@ boolean emberAfManagerPutHistoricalEventCallback(int8u* HistoryStr)
 boolean emberAfManagerPutReportTimeCallback(int16u reportStr)
 {
 	reportTime = reportStr;
+	if(reportTime == 0)
+	{
+		emberEventControlSetInactive(myDelay);
+	}
+	else
+	{
+		emberEventControlSetDelayMS(myDelay, reportTime * MY_DELAY_IN_MS);
+	}
+
 	emberAfCorePrintln("emberAfManagerPutReportTimeCallback:%d",reportTime);
 	return 1;
 }
@@ -660,11 +697,12 @@ boolean emberAfManagerGetReportTimeCallback(int16u reportStr)
 
 boolean emberAfManagerPutPingCallback(uint8_t* Ping)
 {
-	emberAfCorePrintln("emberAfManagerPutPingCallback--:%d",Ping);
+	emberAfCorePrintln("emberAfManagerPutPingCallback--:");
 	for(int i=0;i<pingLen;i++)
 	{
-		emberAfCorePrintln("ping[i]--:%d",Ping[i]);
+
 		pingReport[i] = Ping[i];
+		emberAfCorePrintln("pingReport[i]--:%d",pingReport[i]);
 	}
 	return 1;
 }

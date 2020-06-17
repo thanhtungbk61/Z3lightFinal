@@ -19,9 +19,9 @@ Image Type:           0x0000
 Firmware Version:     0x00000001
 Stack Version:        0x0002
 Header String:        EBL Z3LightSoc
-Total Image Size:     278762 bytes
+Total Image Size:     279018 bytes
 Total Tags:           1
   ID:                 0x0000   (Upgrade Image)
-  Length:             278700 bytes
+  Length:             278956 bytes
 
 

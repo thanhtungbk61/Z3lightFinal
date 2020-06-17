@@ -111,6 +111,28 @@ uint8_t reportSensor()
 {
 	static uint16_t count;
 	count++;
+	if(dayState == DAY)
+	{
+		if(count < 50)
+		{
+			count = 100 - count;
+			if(count ==99)
+			{
+				count =0;
+			}
+		}
+	}
+	else
+	{
+		if(count > 50)
+		{
+			count = count -50;
+			if(count == 49)
+			{
+				count =0;
+			}
+		}
+	}
 	emberAfWriteServerAttribute(1,ZCL_ILLUM_MEASUREMENT_CLUSTER_ID,ZCL_ILLUM_MEASURED_VALUE_ATTRIBUTE_ID,&count,0x21);
 	uint16_t value;
 	uint8_t status=1;

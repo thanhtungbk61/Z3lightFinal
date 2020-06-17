@@ -1,5 +1,5 @@
 network-steering/network-steering.o: \
- C:/SiliconLabs/SimplicityStudio/v4/developer/sdks/gecko_sdk_suite/v2.5/protocol/zigbee/app/framework/plugin/network-steering/network-steering.c \
+ ../network-steering/network-steering.c \
  c:\siliconlabs\simplicitystudio\v4\developer\sdks\gecko_sdk_suite\v2.5\protocol\zigbee\app\framework\include\af.h \
  C:/SiliconLabs/SimplicityStudio/v4/developer/sdks/gecko_sdk_suite/v2.5/platform/base/hal/micro/cortexm3/compiler/gcc.h \
  c:\siliconlabs\simplicitystudio\v4\developer\sdks\gecko_sdk_suite\v2.5\platform\device\siliconlabs\efr32mg12p\include\em_device.h \

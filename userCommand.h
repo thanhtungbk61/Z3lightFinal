@@ -18,7 +18,9 @@
 #include "af.h"
 #include "userFlashV2.h"
 
-
+#define NIGHT 	0
+#define DAY		1
+volatile uint8_t dayState;
 
 uint8_t getPing(uint8_t* value);
 uint8_t reportPing(uint8_t* value);

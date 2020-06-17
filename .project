@@ -624,11 +624,6 @@
 			<locationURI>STUDIO_SDK_LOC/protocol/zigbee/app/framework/plugin/network-steering/network-steering-soc.c</locationURI>
 		</link>
 		<link>
-			<name>network-steering/network-steering.c</name>
-			<type>1</type>
-			<locationURI>STUDIO_SDK_LOC/protocol/zigbee/app/framework/plugin/network-steering/network-steering.c</locationURI>
-		</link>
-		<link>
 			<name>on-off/on-off.c</name>
 			<type>1</type>
 			<locationURI>STUDIO_SDK_LOC/protocol/zigbee/app/framework/plugin/on-off/on-off.c</locationURI>

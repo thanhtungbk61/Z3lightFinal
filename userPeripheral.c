@@ -12,7 +12,7 @@
 
 void pwmInit(void)
 {
-      //CHIP_Init();
+//      CHIP_Init();
 
       CMU_ClockEnable(cmuClock_GPIO, true);
       CMU_ClockEnable(cmuClock_TIMER1, true);
